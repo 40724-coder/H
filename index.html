@@ -118,7 +118,10 @@
                 items.forEach(item => {
                     total += item.price;
                     if (item.type === 'half') { myShare += item.price / 2; fanShare += item.price / 2; } 
-                    else if (item.type === 'fan') { fanShare += item.price; }
+                   else if (item.type === 'fan') { 
+                        if (payer === 'me') { fanShare += item.price; }
+                        else { myShare += item.price; }
+                    }
                     else if (item.type === 'me') { myShare += item.price; }
                 });
                 return { total, myShare, fanShare };
@@ -158,7 +161,10 @@
                         let typeLabel = 'หารครึ่ง';
                         let itemPraiShare = 0; let itemNaiShare = 0;
                         if (item.type === 'half') { typeLabel = 'หารครึ่ง'; itemPraiShare = item.price / 2; itemNaiShare = item.price / 2; } 
-                        else if (item.type === 'fan') { typeLabel = 'จ่ายให้ก่อน (นาย)'; itemNaiShare = item.price; } 
+                        else if (item.type === 'fan') { 
+                        if (payer === 'me') { typeLabel = 'ของนาย (ปรายออกให้)'; itemNaiShare = item.price; } 
+                        else { typeLabel = 'ของปราย (นายออกให้)'; itemPraiShare = item.price; }
+                        } 
                         else if (item.type === 'me') { typeLabel = 'ส่วนตัว (ปราย)'; itemPraiShare = item.price; }
                         
                         return {
@@ -211,7 +217,15 @@
                     let typeLabel = 'หารครึ่ง';
                     let itemPraiShare = 0; let itemNaiShare = 0;
                     if (item.type === 'half') { typeLabel = 'หารครึ่ง'; itemPraiShare = item.price / 2; itemNaiShare = item.price / 2; } 
-                    else if (item.type === 'fan') { typeLabel = 'จ่ายให้ก่อน (นาย)'; itemNaiShare = item.price; } 
+                    else if (item.type === 'fan') { 
+                    if (payer === 'me') { 
+                    typeLabel = 'ของนาย (ปรายออกให้)'; 
+                    itemNaiShare = item.price; 
+                    } else { 
+                    typeLabel = 'ของปราย (นายออกให้)'; 
+                    itemPraiShare = item.price; 
+                    }
+                } 
                     else if (item.type === 'me') { typeLabel = 'ส่วนตัว (ปราย)'; itemPraiShare = item.price; }
                     return [new Date().toLocaleDateString('th-TH'), item.name, item.price, typeLabel, payer === 'me' ? 'ปราย' : 'นาย', itemPraiShare, itemNaiShare];
                 });
@@ -347,3 +361,4 @@
     </script>
 </body>
 </html>
+
