@@ -160,7 +160,18 @@
                     items: items.map(item => {
                         let typeLabel = 'หารครึ่ง';
                         let itemPraiShare = 0; let itemNaiShare = 0;
-                        if (item.type === 'half') { typeLabel = 'หารครึ่ง'; itemPraiShare = item.price / 2; itemNaiShare = item.price / 2; } 
+                        if (item.type === 'half') { 
+                        typeLabel = 'หารครึ่ง'; 
+                        if (payer === 'me') {
+                            // ปรายจ่าย -> ปราย 0 บาท, นายเป็นหนี้ครึ่งนึง
+                            itemPraiShare = 0; 
+                            itemNaiShare = item.price / 2; 
+                        } else {
+                            // นายจ่าย -> นาย 0 บาท, ปรายเป็นหนี้ครึ่งนึง
+                            itemPraiShare = item.price / 2; 
+                            itemNaiShare = 0;
+                        }
+                    } 
                         else if (item.type === 'fan') { 
                         if (payer === 'me') { typeLabel = 'ของนาย (ปรายออกให้)'; itemNaiShare = item.price; } 
                         else { typeLabel = 'ของปราย (นายออกให้)'; itemPraiShare = item.price; }
@@ -216,7 +227,16 @@
                 const rows = items.map(item => {
                     let typeLabel = 'หารครึ่ง';
                     let itemPraiShare = 0; let itemNaiShare = 0;
-                    if (item.type === 'half') { typeLabel = 'หารครึ่ง'; itemPraiShare = item.price / 2; itemNaiShare = item.price / 2; } 
+                    if (item.type === 'half') { 
+                        typeLabel = 'หารครึ่ง'; 
+                        if (payer === 'me') {
+                            itemPraiShare = 0; 
+                            itemNaiShare = item.price / 2; 
+                        } else {
+                            itemPraiShare = item.price / 2; 
+                            itemNaiShare = 0;
+                        }
+                    } 
                     else if (item.type === 'fan') { 
                     if (payer === 'me') { 
                     typeLabel = 'ของนาย (ปรายออกให้)'; 
@@ -361,4 +381,5 @@
     </script>
 </body>
 </html>
+
 
